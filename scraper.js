@@ -3,12 +3,14 @@ const puppeteer = require('puppeteer');
 const websiteConfigs = {
     'mangareader.to': {
         selector: 'a.item-link',
-        attribute: 'title' // Specify which attribute or property to extract
+        attribute: 'title', // Specify which attribute or property to extract
+        index: 0
     },
-    // 'asuracomic.net': {
-    //     selector: 'div.chapter-latest a',
-    //     attribute: 'textContent' // Specify which attribute or property to extract
-    // },
+    'asuracomic.net': {
+        selector: 'h3.font-bold.text-xl',
+        attribute: 'innerText', // Specify which attribute or property to extract
+        index: 1
+    },
     // Add more websites as needed
 };
 
@@ -23,11 +25,16 @@ async function checkNewChapter(url) {
     if (!config) {
         throw new Error('Website not supported');
     }
-
+    console.log('Waiting for selector...');
+    await page.waitForSelector(config.selector, {visible: true});
+    console.log('Selector found, extracting content...');
+    
     const latestChapter = await page.evaluate((config) => {
-        const chapterElement = document.querySelector(config.selector);
-        if (chapterElement) {
-            return chapterElement.getAttribute(config.attribute); // Extract the specified attribute
+        const elements = document.querySelectorAll(config.selector);
+        const index = config.index || 0; // Default to the first instance if not specified
+        if (elements.length > index) {
+            const targetElement = elements[index];
+            return targetElement[config.attribute]; // Extract the specified property
         }
         return null;
     }, config);
@@ -36,7 +43,7 @@ async function checkNewChapter(url) {
     return latestChapter;
 }
 
-const url = 'https://mangareader.to/rentagirlfriend-2291';
+const url = 'https://mangareader.to/daily-life-of-farming-life-in-another-world-65583';
 checkNewChapter(url).then(latestChapter => {
     if (latestChapter) {
         console.log(`Latest Chapter: ${latestChapter}`);
