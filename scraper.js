@@ -43,15 +43,15 @@ async function checkNewChapter(url) {
     return latestChapter;
 }
 
-const url = 'https://mangareader.to/read/atashi-mary-san-ima-isekai-ni-iruno-66331/ja/chapter-2';
-checkNewChapter(url).then(latestChapter => {
-    if (latestChapter) {
-        console.log(`Latest Chapter: ${latestChapter}`);
-    } else {
-        console.log('Could not find the latest chapter.');
-    }
-}).catch(error => {
-    console.error('Error:', error);
-});
+// const url = 'https://mangareader.to/read/atashi-mary-san-ima-isekai-ni-iruno-66331/ja/chapter-2';
+// checkNewChapter(url).then(latestChapter => {
+//     if (latestChapter) {
+//         console.log(`Latest Chapter: ${latestChapter}`);
+//     } else {
+//         console.log('Could not find the latest chapter.');
+//     }
+// }).catch(error => {
+//     console.error('Error:', error);
+// });
 
-//module.exports = { checkNewChapter };
+module.exports = { checkNewChapter };
