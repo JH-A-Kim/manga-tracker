@@ -25,9 +25,9 @@ async function checkNewChapter(url) {
     if (!config) {
         throw new Error('Website not supported');
     }
-    console.log('Waiting for selector...');
-    await page.waitForSelector(config.selector, {visible: true});
-    console.log('Selector found, extracting content...');
+    // console.log('Waiting for selector...');
+    // await page.waitForSelector(config.selector, {visible: true});
+    // console.log('Selector found, extracting content...');
     
     const latestChapter = await page.evaluate((config) => {
         const elements = document.querySelectorAll(config.selector);
@@ -43,7 +43,7 @@ async function checkNewChapter(url) {
     return latestChapter;
 }
 
-const url = 'https://mangareader.to/daily-life-of-farming-life-in-another-world-65583';
+const url = 'https://mangareader.to/read/atashi-mary-san-ima-isekai-ni-iruno-66331/ja/chapter-2';
 checkNewChapter(url).then(latestChapter => {
     if (latestChapter) {
         console.log(`Latest Chapter: ${latestChapter}`);
