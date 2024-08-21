@@ -2,12 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const mangaRouter = require('./routes/manga');
 const { checkNewChapter } = require('./scraper');
+require('dotenv').config();
+
 
 const app = express();
 app.use(express.json());
-const password = process.env.MONGO_PASSWORD;
 
-const dbURI = 'mongodb+srv://kimisawesome72:<password>@clustert.olsip.mongodb.net/?retryWrites=true&w=majority&appName=ClusterT';
+const dbURI = process.env.MONGODB_URI;
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Database connected successfully'))
