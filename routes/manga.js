@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Manga = require('../models/Manga');
-const User = require('../models/User');
+const User = require('../models/user');
 const { checkNewChapter } = require('../scraper');
 
 router.post('/subscribe', async (req, res) => {
@@ -18,7 +18,7 @@ router.post('/subscribe', async (req, res) => {
         user1.MangaList.push(manga._id);
         await user1.save();
     
-        res.status(201).json({message: 'Subscribed successfully'});
+        res.status(200).json({message: 'Subscribed successfully'});
     }
     catch(err){
         res.status(400).json({message: err.message});
