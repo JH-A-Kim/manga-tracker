@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+  title: Manga Tracker API
+  version: 1.0.0
+  description: API documentation for the Manga Tracker Backend. This API allows users to subscribe to manga updates and add new manga to the database.
+paths:
+  /subscribe:
+    post:
+      summary: Subscribe to a manga
+      description: Allows a user to subscribe to a manga. The manga's latest chapter is stored and associated with the user's manga list.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                params:
+                  type: object
+                  properties:
+                    url:
+                      type: string
+                      format: uri
+                      example: 'https://mangawebsite.com/manga-title'
+                      description: The URL of the manga to subscribe to.
+                    user:
+                      type: string
+                      example: 64ab0f58fbc1234567e1234f
+                      description: The ID of the user subscribing to the manga.
+              required:
+                - params
+      responses:
+        '200':
+          description: Successfully subscribed to the manga.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Subscribed successfully
+        '400':
+          description: Error in subscribing to the manga.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Error message
+  /newManga:
+    post:
+      summary: Add a new manga to the database
+      description: Adds a new manga to the database and returns the latest chapter information.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  example: 'https://mangawebsite.com/manga-title'
+                  description: The URL of the manga to add.
+              required:
+                - url
+      responses:
+        '200':
+          description: Successfully added the manga and returned the latest chapter information.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  latestChapter:
+                    type: string
+                    example: Chapter 123
+        '400':
+          description: Error in adding the manga.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Error message
+components:
+  schemas:
+    Manga:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The URL of the manga.
+        latestChapter:
+          type: string
+          description: The latest chapter of the manga.
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the user.
+        MangaList:
+          type: array
+          items:
+            type: string
+          description: An array of manga IDs that the user is subscribed to.
+        email:
+          type: string
+          description: The email address of the user.
+        password:
+          type: string
+          description: The password of the user.

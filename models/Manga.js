@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const mangaSchema = new mongoose.Schema({
     url: String,
-    latestChapter: Number,
+    latestChapter: String,
 });
 
 const Manga = mongoose.model('Manga', mangaSchema);

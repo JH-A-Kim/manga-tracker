@@ -18,7 +18,7 @@ router.post('/subscribe', async (req, res) => {
         user1.MangaList.push(manga._id);
         await user1.save();
     
-        res.status(201).json({message: 'Subscribed successfully'});
+        res.status(200).json({message: 'Subscribed successfully'});
     }
     catch(err){
         res.status(400).json({message: err.message});
@@ -30,6 +30,10 @@ router.post('/newManga', async (req, res) => {
 
     try{
         const latestChapter = await checkNewChapter(url);
+
+        const manga = new Manga({ url, latestChapter});
+        
+        await manga.save();
 
         res.status(200).json({latestChapter});
     }
