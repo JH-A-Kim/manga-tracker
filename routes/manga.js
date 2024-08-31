@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Manga = require('../models/Manga');
-const User = require('../models/User');
+const User = require('../models/user');
 const { checkNewChapter } = require('../scraper');
 
 router.post('/subscribe', async (req, res) => {
